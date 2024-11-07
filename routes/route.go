@@ -5,7 +5,9 @@ import (
 )
 
 type RouteController struct {
+	AuthRoutes *AuthRoutes
 }
 
 func (rc *RouteController) InitRoute(e *echo.Echo) {
+	rc.AuthRoutes.InitAuthRoutes(e)
 }

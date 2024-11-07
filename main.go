@@ -2,6 +2,7 @@ package main
 
 import (
 	"energia/config"
+	"energia/routes"
 	"log"
 
 	"github.com/joho/godotenv"
@@ -15,6 +16,9 @@ func main() {
 	config.MigrateDB(db)
 
 	e := echo.New()
+
+	routeController := routes.RouteController{}
+	routeController.InitRoute(e)
 
 	e.Start(":8000")
 }

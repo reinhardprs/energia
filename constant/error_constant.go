@@ -7,4 +7,7 @@ var (
 	EMAIL_IS_EMPTY    = errors.New("email kosong")
 	PASSWORD_IS_EMPTY = errors.New("password kosong")
 	INVALID_PASSWORD  = errors.New("password salah")
+
+	NAME_IS_EMPTY  = errors.New("name kosong")
+	POWER_IS_EMPTY = errors.New("power kosong")
 )

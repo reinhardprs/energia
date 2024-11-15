@@ -22,6 +22,10 @@ import (
 	userUsageRepo "energia/repository/user-usage"
 	userUsageService "energia/service/user-usage"
 
+	weatherController "energia/controller/weather"
+	weatherRepo "energia/repository/weather"
+	weatherService "energia/service/weather"
+
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 )
@@ -52,11 +56,16 @@ func main() {
 	userUsageService := userUsageService.NewUserUsageService(userUsageRepo, deviceUsageRepo)
 	userUsageController := userUsageController.NewUserUsageController(userUsageService)
 
+	weatherRepo := weatherRepo.NewWeatherRepo(db)
+	weatherService := weatherService.NewWeatherService(weatherRepo)
+	weatherController := weatherController.NewWeatherController(weatherService)
+
 	routeController := routes.RouteController{
 		AuthRoutes:        &routes.AuthRoutes{AuthController: authController},
 		DeviceRoutes:      &routes.DeviceRoutes{DeviceController: deviceController},
 		DeviceUsageRoutes: &routes.DeviceUsageRoutes{DeviceUsageController: deviceUsageController},
 		UserUsageRoutes:   &routes.UserUsageRoutes{UserUsageController: userUsageController},
+		WeatherRoutes:     &routes.WeatherRoutes{WeatherController: weatherController},
 	}
 	routeController.InitRoute(e)
 

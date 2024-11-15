@@ -9,6 +9,7 @@ type RouteController struct {
 	DeviceRoutes      *DeviceRoutes
 	DeviceUsageRoutes *DeviceUsageRoutes
 	UserUsageRoutes   *UserUsageRoutes
+	WeatherRoutes     *WeatherRoutes
 }
 
 func (rc *RouteController) InitRoute(e *echo.Echo) {
@@ -16,4 +17,5 @@ func (rc *RouteController) InitRoute(e *echo.Echo) {
 	rc.DeviceRoutes.InitDeviceRoutes(e)
 	rc.DeviceUsageRoutes.InitDeviceUsageRoutes(e)
 	rc.UserUsageRoutes.InitUserUsageRoutes(e)
+	rc.WeatherRoutes.InitWeatherRoutes(e)
 }

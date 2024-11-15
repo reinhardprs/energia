@@ -1,11 +1,11 @@
 package device
 
 import (
+	"energia/constant"
 	"energia/controller/base"
 	"energia/controller/device/request"
 	"energia/controller/device/response"
 	"energia/service/device"
-	"errors"
 	"strconv"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -47,7 +47,7 @@ func (deviceController DeviceController) UpdateDeviceController(c echo.Context) 
 	deviceIDParam := c.Param("id")
 	deviceID, err := strconv.Atoi(deviceIDParam)
 	if err != nil {
-		return base.ErrorResponse(c, errors.New("Invalid device ID"))
+		return base.ErrorResponse(c, constant.INVALID_DEVICE_ID)
 	}
 
 	deviceUpdate := request.UpdateDeviceRequest{}
@@ -75,10 +75,10 @@ func (deviceController DeviceController) DeleteDeviceController(c echo.Context) 
 	deviceIDStr := c.Param("id")
 	deviceID, err := strconv.Atoi(deviceIDStr)
 	if err != nil {
-		return base.ErrorResponse(c, errors.New("invalid device ID"))
+		return base.ErrorResponse(c, constant.INVALID_DEVICE_ID)
 	}
 
-	deviceController.deviceService.Delete(userID, deviceID)
+	err = deviceController.deviceService.Delete(userID, deviceID)
 	if err != nil {
 		return base.ErrorResponse(c, err)
 	}
@@ -93,7 +93,7 @@ func (deviceController DeviceController) GetDeviceController(c echo.Context) err
 	deviceIDStr := c.Param("id")
 	deviceID, err := strconv.Atoi(deviceIDStr)
 	if err != nil {
-		return base.ErrorResponse(c, errors.New("invalid device ID"))
+		return base.ErrorResponse(c, constant.INVALID_DEVICE_ID)
 	}
 
 	device, err := deviceController.deviceService.FindByID(userID, deviceID)

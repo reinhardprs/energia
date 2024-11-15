@@ -60,20 +60,18 @@ func (deviceRepo *DeviceRepo) Update(userID int, device entities.Device) (entiti
 	deviceDb := Device{}
 	result := deviceRepo.db.Where("id = ? AND user_id = ?", device.ID, userID).First(&deviceDb)
 	if result.Error != nil {
-			return entities.Device{}, result.Error
+		return entities.Device{}, result.Error
 	}
 
 	deviceDb.Name = device.Name
 	deviceDb.Power = device.Power
 
 	if err := deviceRepo.db.Save(&deviceDb).Error; err != nil {
-			return entities.Device{}, err
+		return entities.Device{}, err
 	}
 
 	return deviceDb.ToEntities(), nil
 }
-
-
 
 func (deviceRepo *DeviceRepo) Delete(deviceID int, userID int) error {
 	result := deviceRepo.db.Delete(&Device{}, "user_id = ? AND id = ?", deviceID, userID)

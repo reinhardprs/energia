@@ -2,9 +2,11 @@ package main
 
 import (
 	"energia/config"
+	"energia/helper/openaiadapter"
 	"energia/middleware"
 	"energia/routes"
 	"log"
+	"os"
 
 	authController "energia/controller/auth"
 	authRepo "energia/repository/auth"
@@ -26,8 +28,12 @@ import (
 	weatherRepo "energia/repository/weather"
 	weatherService "energia/service/weather"
 
+	suggestionController "energia/controller/suggestion"
+	suggestionService "energia/service/suggestion"
+
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	openai "github.com/sashabaranov/go-openai"
 )
 
 func main() {
@@ -60,12 +66,21 @@ func main() {
 	weatherService := weatherService.NewWeatherService(weatherRepo)
 	weatherController := weatherController.NewWeatherController(weatherService)
 
+	openAIKey := os.Getenv("OPENAI_API_KEY")
+	openaiClient := openai.NewClient(openAIKey)
+
+	openaiAdapter := openaiadapter.NewOpenAIClientAdapter(openaiClient)
+
+	suggestionService := suggestionService.NewSuggestionService(deviceRepo, weatherRepo, openaiAdapter)
+	suggestionController := suggestionController.NewSuggestionController(suggestionService)
+
 	routeController := routes.RouteController{
 		AuthRoutes:        &routes.AuthRoutes{AuthController: authController},
 		DeviceRoutes:      &routes.DeviceRoutes{DeviceController: deviceController},
 		DeviceUsageRoutes: &routes.DeviceUsageRoutes{DeviceUsageController: deviceUsageController},
 		UserUsageRoutes:   &routes.UserUsageRoutes{UserUsageController: userUsageController},
 		WeatherRoutes:     &routes.WeatherRoutes{WeatherController: weatherController},
+		SuggestionRoutes:  &routes.SuggestionRoutes{SuggestionController: suggestionController},
 	}
 	routeController.InitRoute(e)
 

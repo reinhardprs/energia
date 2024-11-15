@@ -1,0 +1,16 @@
+packages:
+  - name: "energia/repository/auth"
+    interfaces:
+      - "AuthRepoInterface"
+    output: "./mocks"
+    outpkg: "mocks"
+  - name: "energia/middleware"
+    interfaces:
+      - "JwtInterface"
+    output: "./mocks"
+    outpkg: "mocks"
+  - name: "energia/repository/device"
+    interfaces:
+      - "DeviceRepoInterface"
+    output: "./mocks"
+    outpkg: "mocks"

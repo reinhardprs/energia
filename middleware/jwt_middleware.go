@@ -34,3 +34,15 @@ func (JwtLink JwtLink) GenerateJWT(userID int, email string) (string, error) {
 
 	return t, nil
 }
+
+func (JwtLink JwtLink) ParseToken(tokenString string) (*jwtCustomClaims, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &jwtCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(os.Getenv("JWT_SECRET_KEY")), nil
+	})
+
+	if claims, ok := token.Claims.(*jwtCustomClaims); ok && token.Valid {
+		return claims, nil
+	} else {
+		return nil, err
+	}
+}

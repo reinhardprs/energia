@@ -12,4 +12,8 @@ var (
 	POWER_IS_EMPTY    = errors.New("power kosong")
 	INVALID_DEVICE_ID = errors.New("invalid device ID")
 	DEVICE_NOT_FOUND  = errors.New("device not found")
+
+	INVALID_TOKEN_CLAIMS       = errors.New("invalid token claims")
+	USER_ID_NOT_FOUND_IN_TOKEN = errors.New("user ID not found in token")
+	INVALID_DATE_FORMAT        = errors.New("invalid date format")
 )

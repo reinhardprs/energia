@@ -14,6 +14,14 @@ import (
 	deviceRepo "energia/repository/device"
 	deviceService "energia/service/device"
 
+	deviceUsageController "energia/controller/device-usage"
+	deviceUsageRepo "energia/repository/device-usage"
+	deviceUsageService "energia/service/device-usage"
+
+	userUsageController "energia/controller/user-usage"
+	userUsageRepo "energia/repository/user-usage"
+	userUsageService "energia/service/user-usage"
+
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 )
@@ -36,9 +44,19 @@ func main() {
 	deviceService := deviceService.NewDeviceService(deviceRepo)
 	deviceController := deviceController.NewDeviceController(deviceService)
 
+	deviceUsageRepo := deviceUsageRepo.NewDeviceUsageRepo(db)
+	deviceUsageService := deviceUsageService.NewDeviceUsageService(deviceRepo, deviceUsageRepo)
+	deviceUsageController := deviceUsageController.NewDeviceUsageController(deviceUsageService)
+
+	userUsageRepo := userUsageRepo.NewUserUsageRepo(db)
+	userUsageService := userUsageService.NewUserUsageService(userUsageRepo, deviceUsageRepo)
+	userUsageController := userUsageController.NewUserUsageController(userUsageService)
+
 	routeController := routes.RouteController{
-		AuthRoutes:   &routes.AuthRoutes{AuthController: authController},
-		DeviceRoutes: &routes.DeviceRoutes{DeviceController: deviceController},
+		AuthRoutes:        &routes.AuthRoutes{AuthController: authController},
+		DeviceRoutes:      &routes.DeviceRoutes{DeviceController: deviceController},
+		DeviceUsageRoutes: &routes.DeviceUsageRoutes{DeviceUsageController: deviceUsageController},
+		UserUsageRoutes:   &routes.UserUsageRoutes{UserUsageController: userUsageController},
 	}
 	routeController.InitRoute(e)
 

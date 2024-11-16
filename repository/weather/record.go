@@ -7,11 +7,11 @@ import (
 
 type Weather struct {
 	ID          int       `gorm:"primaryKey"`
-	City        string    `gorm:"not null"`
+	City        string    `gorm:"not null;type:varchar(255)"`
 	Date        time.Time `gorm:"not null"`
-	Temperature float32   `gorm:"not null"`
-	Humidity    float32   `gorm:"not null"`
-	Description string    `gorm:"not null"`
+	Temperature float32   `gorm:"not null;type:float"`
+	Humidity    float32   `gorm:"not null;type:float"`
+	Description string    `gorm:"not null;type:text"`
 }
 
 func FromEntities(weather entities.Weather) Weather {

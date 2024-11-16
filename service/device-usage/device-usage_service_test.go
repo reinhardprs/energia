@@ -31,6 +31,7 @@ func TestDeviceUsageService_Create_Success(t *testing.T) {
 		EndTime:        endTime,
 		Duration:       60,
 		EnergyConsumed: 6,
+	}
 
 	mockDeviceRepo.On("FindByID", 1, 1).Return(mockDevice, nil)
 	mockDeviceUsageRepo.On("Create", mock.AnythingOfType("entities.DeviceUsage")).Return(mockDeviceUsage, nil)

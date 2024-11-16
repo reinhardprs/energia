@@ -31,6 +31,9 @@ import (
 	suggestionController "energia/controller/suggestion"
 	suggestionService "energia/service/suggestion"
 
+	emailController "energia/controller/email"
+	emailService "energia/service/email"
+
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	openai "github.com/sashabaranov/go-openai"
@@ -56,7 +59,7 @@ func main() {
 
 	deviceUsageRepo := deviceUsageRepo.NewDeviceUsageRepo(db)
 	deviceUsageService := deviceUsageService.NewDeviceUsageService(deviceRepo, deviceUsageRepo)
-	deviceUsageController := deviceUsageController.NewDeviceUsageController(deviceUsageService)
+	deviceUsageController := deviceUsageController.NewDeviceUsageController(deviceUsageService, deviceService)
 
 	userUsageRepo := userUsageRepo.NewUserUsageRepo(db)
 	userUsageService := userUsageService.NewUserUsageService(userUsageRepo, deviceUsageRepo)
@@ -74,6 +77,9 @@ func main() {
 	suggestionService := suggestionService.NewSuggestionService(deviceRepo, weatherRepo, openaiAdapter)
 	suggestionController := suggestionController.NewSuggestionController(suggestionService)
 
+	emailService := emailService.NewEmailService(deviceUsageRepo, deviceService)
+	emailController := emailController.NewEmailController(emailService)
+
 	routeController := routes.RouteController{
 		AuthRoutes:        &routes.AuthRoutes{AuthController: authController},
 		DeviceRoutes:      &routes.DeviceRoutes{DeviceController: deviceController},
@@ -81,6 +87,7 @@ func main() {
 		UserUsageRoutes:   &routes.UserUsageRoutes{UserUsageController: userUsageController},
 		WeatherRoutes:     &routes.WeatherRoutes{WeatherController: weatherController},
 		SuggestionRoutes:  &routes.SuggestionRoutes{SuggestionController: suggestionController},
+		EmailRoutes:       &routes.EmailRoutes{EmailController: emailController},
 	}
 	routeController.InitRoute(e)
 

@@ -4,6 +4,7 @@ import "time"
 
 type DeviceUsage struct {
 	ID             int
+	UserID         int
 	DeviceID       int
 	StartTime      time.Time
 	EndTime        time.Time

@@ -7,8 +7,8 @@ import (
 
 type User struct {
 	ID        int       `gorm:"primaryKey"`
-	Email     string    `gorm:"unique"`
-	Password  string    `gorm:"not null"`
+	Email     string    `gorm:"unique;type:varchar(255);not null"`
+	Password  string    `gorm:"not null;type:varchar(255)"`
 	CreatedAt time.Time `gorm:"autoCreateTime"`
 }
 

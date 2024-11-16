@@ -8,11 +8,11 @@ import (
 
 type UserUsage struct {
 	ID          int       `gorm:"primaryKey"`
-	UserID      int       `gorm:"not null"`
+	UserID      int       `gorm:"not null;type:int"`
 	User        auth.User `gorm:"foreignKey:UserID;references:ID"`
 	Date        time.Time `gorm:"not null"`
-	TotalEnergy float32   `gorm:"not null"`
-	TotalCost   float32   `gorm:"not null"`
+	TotalEnergy float32   `gorm:"not null;type:float"`
+	TotalCost   float32   `gorm:"not null;type:float"`
 }
 
 func FromEntities(userUsage entities.UserUsage) UserUsage {

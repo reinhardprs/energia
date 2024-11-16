@@ -8,10 +8,10 @@ import (
 
 type Device struct {
 	ID        int       `gorm:"primaryKey"`
-	UserID    int       `gorm:"not null"`                       
+	UserID    int       `gorm:"not null;type:int"`
 	User      auth.User `gorm:"foreignKey:UserID;references:ID"`
-	Name      string    `gorm:"not null"`
-	Power     float32   `gorm:"not null"`
+	Name      string    `gorm:"not null;type:varchar(255)"`
+	Power     float32   `gorm:"not null;float"`
 	CreatedAt time.Time `gorm:"autoCreateTime"`
 	UpdatedAt time.Time `gorm:"autoUpdateTime"`
 }

@@ -8,12 +8,12 @@ import (
 
 type DeviceUsage struct {
 	ID             int           `gorm:"primaryKey"`
-	DeviceID       int           `gorm:"not null"`
+	DeviceID       int           `gorm:"not null;type:int"`
 	Device         device.Device `gorm:"foreignKey:DeviceID;references:ID"`
 	StartTime      time.Time     `gorm:"not null"`
 	EndTime        time.Time     `gorm:"not null"`
-	Duration       float32       `gorm:"not null"`
-	EnergyConsumed float32       `gorm:"not null"`
+	Duration       float32       `gorm:"not null;type:float"`
+	EnergyConsumed float32       `gorm:"not null;type:float"`
 }
 
 func FromEntities(deviceUsage entities.DeviceUsage) DeviceUsage {

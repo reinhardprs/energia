@@ -11,6 +11,7 @@ type RouteController struct {
 	UserUsageRoutes   *UserUsageRoutes
 	WeatherRoutes     *WeatherRoutes
 	SuggestionRoutes  *SuggestionRoutes
+	EmailRoutes       *EmailRoutes
 }
 
 func (rc *RouteController) InitRoute(e *echo.Echo) {
@@ -20,4 +21,5 @@ func (rc *RouteController) InitRoute(e *echo.Echo) {
 	rc.UserUsageRoutes.InitUserUsageRoutes(e)
 	rc.WeatherRoutes.InitWeatherRoutes(e)
 	rc.SuggestionRoutes.InitSuggestionRoutes(e)
+	rc.EmailRoutes.InitEmailRoutes(e)
 }

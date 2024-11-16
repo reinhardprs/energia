@@ -16,7 +16,6 @@ func TestDeviceUsageService_Create_Success(t *testing.T) {
 	mockDeviceUsageRepo := new(mocks.DeviceUsageRepoInterface)
 	deviceUsageService := device_usage.NewDeviceUsageService(mockDeviceRepo, mockDeviceUsageRepo)
 
-	// Mock device data
 	mockDevice := entities.Device{
 		ID:     1,
 		UserID: 1,
@@ -24,25 +23,20 @@ func TestDeviceUsageService_Create_Success(t *testing.T) {
 		Power:  100,
 	}
 
-	// Mock device usage data with specific start and end times
 	startTime := time.Now()
-	endTime := startTime.Add(1 * time.Hour) // 1-hour duration for simplicity
+	endTime := startTime.Add(1 * time.Hour)
 	mockDeviceUsage := entities.DeviceUsage{
 		DeviceID:       mockDevice.ID,
 		StartTime:      startTime,
 		EndTime:        endTime,
-		Duration:       60, // in minutes
-		EnergyConsumed: 6,  // calculated as 100W * 60 mins / 1000
-	}
+		Duration:       60,
+		EnergyConsumed: 6,
 
-	// Define mocks
 	mockDeviceRepo.On("FindByID", 1, 1).Return(mockDevice, nil)
 	mockDeviceUsageRepo.On("Create", mock.AnythingOfType("entities.DeviceUsage")).Return(mockDeviceUsage, nil)
 
-	// Call the service method
 	createdDeviceUsage, err := deviceUsageService.Create(mockDeviceUsage, 1)
 
-	// Assertions
 	assert.NoError(t, err)
 	assert.Equal(t, float32(60), createdDeviceUsage.Duration)
 	assert.Equal(t, float32(6), createdDeviceUsage.EnergyConsumed)

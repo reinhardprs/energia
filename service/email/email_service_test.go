@@ -2,7 +2,7 @@ package email_test
 
 import (
 	"energia/entities"
-	"energia/mocks" // Import mock interfaces
+	"energia/mocks"
 	"energia/service/email"
 	"errors"
 	"testing"
@@ -19,8 +19,6 @@ func TestGenerateDeviceUsageReport(t *testing.T) {
 	emailService := email.NewEmailService(mockDeviceUsageRepo, mockDeviceService)
 
 	today := time.Now()
-
-	// Gunakan mock.MatchedBy untuk mencocokkan time.Time secara logis
 	mockDeviceUsageRepo.On("GetDeviceUsageByDate", mock.AnythingOfType("int"), mock.MatchedBy(func(date time.Time) bool {
 		return date.Year() == today.Year() && date.Month() == today.Month() && date.Day() == today.Day()
 	})).Return([]entities.DeviceUsage{

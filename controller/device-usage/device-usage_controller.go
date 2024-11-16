@@ -25,13 +25,11 @@ func NewDeviceUsageController(dus du_service.DeviceUsageInterface, ds ds.DeviceI
 }
 
 func (deviceUsageController DeviceUsageController) CreateDeviceUsageController(c echo.Context) error {
-	// Bind request body ke struct
 	var req request.CreateDeviceUsageRequest
 	if err := c.Bind(&req); err != nil {
 		return base.ErrorResponse(c, err)
 	}
 
-	// Validasi token untuk mendapatkan userID
 	userToken := c.Get("user").(*jwt.Token)
 	claims, ok := userToken.Claims.(jwt.MapClaims)
 	if !ok {
@@ -43,26 +41,22 @@ func (deviceUsageController DeviceUsageController) CreateDeviceUsageController(c
 		return base.ErrorResponse(c, constant.USER_ID_NOT_FOUND_IN_TOKEN)
 	}
 
-	// Validasi DeviceID menggunakan DeviceService
 	device, err := deviceUsageController.deviceService.FindByID(int(userID), req.DeviceID)
 	if err != nil {
-		return base.ErrorResponse(c, constant.DEVICE_NOT_FOUND) // Jika device tidak ditemukan
+		return base.ErrorResponse(c, constant.DEVICE_NOT_FOUND)
 	}
 
-	// Konversi request ke entity
 	deviceUsage := req.ToEntities()
-	deviceUsage.UserID = int(userID) // Tambahkan userID ke entitas
+	deviceUsage.UserID = int(userID)
 
-	// Buat device usage baru menggunakan service
 	createdUsage, err := deviceUsageController.deviceUsageService.Create(deviceUsage, int(userID))
 	if err != nil {
 		return base.ErrorResponse(c, err)
 	}
 
-	// Sertakan nama perangkat dalam response
 	return base.SuccessResponse(c, map[string]interface{}{
 		"device_usage": response.FromEntities(createdUsage),
-		"device_name":  device.Name, // Tambahkan nama perangkat ke response
+		"device_name":  device.Name,
 	})
 }
 
@@ -78,30 +72,26 @@ func (deviceUsageController DeviceUsageController) FindAllDeviceUsageController(
 		return base.ErrorResponse(c, constant.USER_ID_NOT_FOUND_IN_TOKEN)
 	}
 
-	// Ambil semua perangkat yang dimiliki user
 	devices, err := deviceUsageController.deviceService.FindAll(int(userID))
 	if err != nil {
 		return base.ErrorResponse(c, err)
 	}
 
-	// Buat peta perangkat berdasarkan DeviceID untuk lookup cepat
 	deviceMap := make(map[int]string)
 	for _, device := range devices {
 		deviceMap[device.ID] = device.Name
 	}
 
-	// Ambil semua data penggunaan perangkat untuk user tertentu
 	deviceUsages, err := deviceUsageController.deviceUsageService.FindAll(int(userID))
 	if err != nil {
 		return base.ErrorResponse(c, err)
 	}
 
-	// Gabungkan informasi device name dengan response
 	var usageResponses []map[string]interface{}
 	for _, usage := range deviceUsages {
 		deviceName, exists := deviceMap[usage.DeviceID]
 		if !exists {
-			continue // Abaikan penggunaan perangkat yang tidak ditemukan
+			continue
 		}
 
 		usageResponses = append(usageResponses, map[string]interface{}{

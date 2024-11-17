@@ -21,7 +21,7 @@ func (JwtLink JwtLink) GenerateJWT(userID int, email string) (string, error) {
 		email,
 		userID,
 		jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 72)),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 12)),
 		},
 	}
 

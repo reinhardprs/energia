@@ -1,11 +1,12 @@
 package response
 
-// EmailResponse mendefinisikan format response untuk pengiriman email
+// EmailResponse is the response for the email endpoint
+// @Description EmailResponse is the response for the email endpoint
+// @Param Message string true "Message of the email"
 type EmailResponse struct {
 	Message string `json:"message"`
 }
 
-// FromEntities mengonversi entitas email menjadi response
 func FromEntities(to string) EmailResponse {
 	return EmailResponse{
 		Message: "Laporan telah dikirimkan ke " + to + " melalui email.",

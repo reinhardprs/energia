@@ -2,6 +2,14 @@ package response
 
 import "energia/entities"
 
+// DeviceUsageResponse is the response for the device-usage endpoint
+// @Description DeviceUsageResponse is the response for the device-usage endpoint
+// @Param ID int true "ID of the device usage"
+// @Param DeviceID int true "ID of the device"
+// @Param StartTime string true "Start time of the device usage"
+// @Param EndTime string true "End time of the device usage"
+// @Param Duration float32 true "Duration of the device usage"
+// @Param EnergyConsumed float32 true "Energy consumed of the device usage"
 type DeviceUsageResponse struct {
 	ID             int     `json:"id"`
 	DeviceID       int     `json:"device_id"`

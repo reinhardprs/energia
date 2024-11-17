@@ -1,0 +1,527 @@
+basePath: /
+definitions:
+  base.BaseResponse:
+    description: BaseResponse is the base response for all the endpoints
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: boolean
+    type: object
+  request.CreateDeviceRequest:
+    description: CreateDeviceRequest is the request for the create device endpoint
+    properties:
+      name:
+        type: string
+      power:
+        type: number
+    type: object
+  request.CreateDeviceUsageRequest:
+    description: CreateDeviceUsageRequest is the request for the create device-usage
+      endpoint
+    properties:
+      device_id:
+        type: integer
+      end_time:
+        type: string
+      start_time:
+        type: string
+    type: object
+  request.CreateUserUsageRequest:
+    description: CreateUserUsageRequest is the request for the create user-usage endpoint
+    properties:
+      date:
+        type: string
+    type: object
+  request.CreateWeatherRequest:
+    description: CreateWeatherRequest is the request for the create weather endpoint
+    properties:
+      city:
+        type: string
+    type: object
+  request.LoginRequest:
+    description: LoginRequest is the request for the login endpoint
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  request.RegisterRequest:
+    description: RegisterRequest is the request for the register endpoint
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  request.SuggestionRequest:
+    description: SuggestionRequest is the request for the suggestion endpoint
+    properties:
+      city:
+        type: string
+    type: object
+  request.UpdateDeviceRequest:
+    description: UpdateDeviceRequest is the request for the update device endpoint
+    properties:
+      name:
+        type: string
+      power:
+        type: number
+    type: object
+  response.AuthResponse:
+    description: AuthResponse is the response for the auth controller
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      token:
+        type: string
+    type: object
+  response.DeviceResponse:
+    description: DeviceResponse is the response for the device endpoint
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      power:
+        type: number
+      user_id:
+        type: integer
+    type: object
+  response.DeviceUsageResponse:
+    description: DeviceUsageResponse is the response for the device-usage endpoint
+    properties:
+      device_id:
+        type: integer
+      duration:
+        type: number
+      end_time:
+        type: string
+      energy_consumed:
+        type: number
+      id:
+        type: integer
+      start_time:
+        type: string
+    type: object
+  response.EmailResponse:
+    description: EmailResponse is the response for the email endpoint
+    properties:
+      message:
+        type: string
+    type: object
+  response.SuggestionResponse:
+    description: SuggestionResponse is the response for the suggestion endpoint
+    properties:
+      message:
+        type: string
+    type: object
+  response.UserUsageResponse:
+    description: UserUsageResponse is the response for the user usage endpoint
+    properties:
+      date:
+        type: string
+      id:
+        type: integer
+      total_cost:
+        type: number
+      total_energy:
+        type: number
+      user_id:
+        type: integer
+    type: object
+  response.WeatherResponse:
+    description: WeatherResponse is the response for the weather endpoint
+    properties:
+      city:
+        type: string
+      condition:
+        type: string
+      date:
+        type: string
+      humidity:
+        type: number
+      temperature:
+        type: number
+    type: object
+host: http://52.65.161.24:8000
+info:
+  contact:
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a simple API for managing energy usage in a household.
+  termsOfService: http://swagger.io/terms/
+  title: Energia API Mini Project
+  version: "1.0"
+paths:
+  /device:
+    post:
+      consumes:
+      - application/json
+      description: Create a new device
+      parameters:
+      - description: Device to create
+        in: body
+        name: device
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateDeviceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.DeviceResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new device
+      tags:
+      - Device
+  /device-usage:
+    get:
+      consumes:
+      - application/json
+      description: Find all device usage
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.DeviceUsageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Find all device usage
+      tags:
+      - Device Usage
+    post:
+      consumes:
+      - application/json
+      description: Create a new device usage
+      parameters:
+      - description: Device usage to create
+        in: body
+        name: device_usage
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateDeviceUsageRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.DeviceUsageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new device usage
+      tags:
+      - Device Usage
+  /device/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a device
+      parameters:
+      - description: ID of the device to delete
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete a device
+      tags:
+      - Device
+    get:
+      consumes:
+      - application/json
+      description: Get a device
+      parameters:
+      - description: ID of the device to get
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.DeviceResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get a device
+      tags:
+      - Device
+    put:
+      consumes:
+      - application/json
+      description: Update a device
+      parameters:
+      - description: ID of the device to update
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Device to update
+        in: body
+        name: device
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateDeviceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.DeviceResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update a device
+      tags:
+      - Device
+  /devices:
+    get:
+      consumes:
+      - application/json
+      description: Get all devices
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.DeviceResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all devices
+      tags:
+      - Device
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Log in a user using email and password
+      parameters:
+      - description: Login Request Body
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/request.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AuthResponse'
+        "400":
+          description: Invalid Request
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+      summary: User Login
+      tags:
+      - Auth
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user
+      parameters:
+      - description: Register Request Body
+        in: body
+        name: register
+        required: true
+        schema:
+          $ref: '#/definitions/request.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AuthResponse'
+        "400":
+          description: Invalid Request
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+      summary: User Registration
+      tags:
+      - Auth
+  /report:
+    post:
+      consumes:
+      - application/json
+      description: Send device usage report
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.EmailResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Send device usage report
+      tags:
+      - Email
+  /suggestion:
+    get:
+      consumes:
+      - application/json
+      description: Get suggestions
+      parameters:
+      - description: City to get suggestions
+        in: body
+        name: city
+        required: true
+        schema:
+          $ref: '#/definitions/request.SuggestionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.SuggestionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get suggestions
+      tags:
+      - Suggestion
+  /user-usage:
+    get:
+      consumes:
+      - application/json
+      description: Find user usage
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserUsageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Find user usage
+      tags:
+      - User Usage
+    post:
+      consumes:
+      - application/json
+      description: Create a new user usage
+      parameters:
+      - description: User usage to create
+        in: body
+        name: user_usage
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateUserUsageRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserUsageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new user usage
+      tags:
+      - User Usage
+  /weather:
+    get:
+      consumes:
+      - application/json
+      description: Get weather by city and date
+      parameters:
+      - description: City of the weather
+        in: body
+        name: city
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateWeatherRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.WeatherResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/base.BaseResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get weather by city and date
+      tags:
+      - Weather
+schemes:
+- http
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

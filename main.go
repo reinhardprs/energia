@@ -8,6 +8,8 @@ import (
 	"log"
 	"os"
 
+	_ "energia/docs"
+
 	authController "energia/controller/auth"
 	authRepo "energia/repository/auth"
 	authService "energia/service/auth"
@@ -38,6 +40,19 @@ import (
 	"github.com/labstack/echo/v4"
 	openai "github.com/sashabaranov/go-openai"
 )
+
+// @title Energia API Mini Project
+// @version 1.0
+// @description This is a simple API for managing energy usage in a household.
+// @termsOfService http://swagger.io/terms/
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @host http://52.65.161.24:8000
+// @BasePath /
+// @schemes http
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 
 func main() {
 	loadEnv()

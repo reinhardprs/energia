@@ -23,8 +23,18 @@ type UserUsageController struct {
 	userUsageService user_usage.UserUsageInterface
 }
 
+// CreateUserUsageController is the controller for the create user usage endpoint
+// @Summary Create a new user usage
+// @Description Create a new user usage
+// @Tags User Usage
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param user_usage body request.CreateUserUsageRequest true "User usage to create"
+// @Success 200 {object} response.UserUsageResponse
+// @Failure 400 {object} base.BaseResponse
+// @Router /user-usage [post]
 func (userUsageController *UserUsageController) CreateUserUsageController(c echo.Context) error {
-
 	userToken := c.Get("user").(*jwt.Token)
 	claims, ok := userToken.Claims.(jwt.MapClaims)
 	if !ok {
@@ -36,7 +46,6 @@ func (userUsageController *UserUsageController) CreateUserUsageController(c echo
 		return base.ErrorResponse(c, constant.USER_ID_NOT_FOUND_IN_TOKEN)
 	}
 
-	// Parsing request JSON
 	var req request.CreateUserUsageRequest
 	if err := c.Bind(&req); err != nil {
 		return base.ErrorResponse(c, err)
@@ -55,8 +64,17 @@ func (userUsageController *UserUsageController) CreateUserUsageController(c echo
 	return c.JSON(http.StatusCreated, response.FromEntities(createdUserUsage))
 }
 
+// FindUserUsageController is the controller for the find user usage endpoint
+// @Summary Find user usage
+// @Description Find user usage
+// @Tags User Usage
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Success 200 {object} response.UserUsageResponse
+// @Failure 400 {object} base.BaseResponse
+// @Router /user-usage [get]
 func (userUsageController *UserUsageController) FindUserUsageController(c echo.Context) error {
-
 	userToken := c.Get("user").(*jwt.Token)
 	claims, ok := userToken.Claims.(jwt.MapClaims)
 	if !ok {

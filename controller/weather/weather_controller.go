@@ -19,6 +19,17 @@ func NewWeatherController(ws *weather.WeatherService) *WeatherController {
 	}
 }
 
+// GetWeatherByCityAndDate is the controller for the get weather by city and date endpoint
+// @Summary Get weather by city and date
+// @Description Get weather by city and date
+// @Tags Weather
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param city body request.CreateWeatherRequest true "City of the weather"
+// @Success 200 {object} response.WeatherResponse
+// @Failure 400 {object} base.BaseResponse
+// @Router /weather [get]
 func (wc *WeatherController) GetWeatherByCityAndDate(c echo.Context) error {
 	var req request.CreateWeatherRequest
 	if err := c.Bind(&req); err != nil {

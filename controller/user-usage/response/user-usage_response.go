@@ -2,6 +2,13 @@ package response
 
 import "energia/entities"
 
+// UserUsageResponse is the response for the user usage endpoint
+// @Description UserUsageResponse is the response for the user usage endpoint
+// @Param ID int true "ID of the user usage"
+// @Param UserID int true "ID of the user"
+// @Param Date string true "Date of the user usage"
+// @Param TotalEnergy float32 true "Total energy of the user usage"
+// @Param TotalCost float32 true "Total cost of the user usage"
 type UserUsageResponse struct {
 	ID          int     `json:"id"`
 	UserID      int     `json:"user_id"`

@@ -21,6 +21,17 @@ func NewSuggestionController(ss suggestion.SuggestionServiceInterface) *Suggesti
 	}
 }
 
+// GetSuggestions is the controller for the get suggestions endpoint
+// @Summary Get suggestions
+// @Description Get suggestions
+// @Tags Suggestion
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param city body request.SuggestionRequest true "City to get suggestions"
+// @Success 200 {object} response.SuggestionResponse
+// @Failure 400 {object} base.BaseResponse
+// @Router /suggestion [get]
 func (c *SuggestionController) GetSuggestions(ctx echo.Context) error {
 	userToken := ctx.Get("user").(*jwt.Token)
 	claims := userToken.Claims.(jwt.MapClaims)

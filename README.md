@@ -36,14 +36,14 @@ Untuk mengakses dokumentasi API, ikuti langkah-langkah berikut:
 
 Clone repositori ke dalam direktori lokal Anda menggunakan perintah berikut:
 
-\`\`\`bash  
+```bash  
 git clone <repository_url>
-\`\`\`
+```
 
 ### 2. Buat file .env
 Buat file .env di direktori root proyek dan isi dengan konfigurasi berikut:
 
-\`\`\`plaintext
+```plaintext
 DATABASE_HOST=""
 DATABASE_PORT=""
 DATABASE_USER=""
@@ -56,7 +56,7 @@ MAIL_USER=""
 MAIL_PASSWORD=""
 MAIL_HOST=""
 MAIL_PORT=""
-\`\`\`plaintext
+```plaintext
 
 ### 3. Jalankan aplikasi
 Jalankan perintah berikut untuk memulai aplikasi:

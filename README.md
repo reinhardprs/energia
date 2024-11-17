@@ -56,7 +56,7 @@ MAIL_USER=""
 MAIL_PASSWORD=""
 MAIL_HOST=""
 MAIL_PORT=""
-```plaintext
+```
 
 ### 3. Jalankan aplikasi
 Jalankan perintah berikut untuk memulai aplikasi:

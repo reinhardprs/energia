@@ -6,6 +6,9 @@ import (
 	"time"
 )
 
+// CreateWeatherRequest is the request for the create weather endpoint
+// @Description CreateWeatherRequest is the request for the create weather endpoint
+// @Param City string true "City of the weather"
 type CreateWeatherRequest struct {
 	City string `json:"city"`
 }

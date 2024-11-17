@@ -20,6 +20,16 @@ func NewEmailController(emailService email.EmailServiceInterface) *EmailControll
 	}
 }
 
+// SendDeviceUsageReportHandler is the controller for the send device usage report endpoint
+// @Summary Send device usage report
+// @Description Send device usage report
+// @Tags Email
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Success 200 {object} response.EmailResponse
+// @Failure 400 {object} base.BaseResponse
+// @Router /report [post]
 func (e *EmailController) SendDeviceUsageReportHandler(c echo.Context) error {
 	userToken := c.Get("user").(*jwt.Token)
 	claims := userToken.Claims.(jwt.MapClaims)

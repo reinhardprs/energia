@@ -3,6 +3,13 @@ package response
 
 import "energia/entities"
 
+// WeatherResponse is the response for the weather endpoint
+// @Description WeatherResponse is the response for the weather endpoint
+// @Param City string true "City of the weather"
+// @Param Temperature float32 true "Temperature of the weather"
+// @Param Humidity float32 true "Humidity of the weather"
+// @Param Condition string true "Condition of the weather"
+// @Param Date string true "Date of the weather"
 type WeatherResponse struct {
 	City        string  `json:"city"`
 	Temperature float32 `json:"temperature"`

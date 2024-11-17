@@ -14,7 +14,7 @@ import (
 
 type DeviceUsageController struct {
 	deviceUsageService du_service.DeviceUsageInterface
-	deviceService      ds.DeviceInterface // Tambahkan ini
+	deviceService      ds.DeviceInterface
 }
 
 func NewDeviceUsageController(dus du_service.DeviceUsageInterface, ds ds.DeviceInterface) *DeviceUsageController {
@@ -24,6 +24,17 @@ func NewDeviceUsageController(dus du_service.DeviceUsageInterface, ds ds.DeviceI
 	}
 }
 
+// CreateDeviceUsageController is the controller for the create device usage endpoint
+// @Summary Create a new device usage
+// @Description Create a new device usage
+// @Tags Device Usage
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Param device_usage body request.CreateDeviceUsageRequest true "Device usage to create"
+// @Success 200 {object} response.DeviceUsageResponse
+// @Failure 400 {object} base.BaseResponse
+// @Router /device-usage [post]
 func (deviceUsageController DeviceUsageController) CreateDeviceUsageController(c echo.Context) error {
 	var req request.CreateDeviceUsageRequest
 	if err := c.Bind(&req); err != nil {
@@ -60,6 +71,16 @@ func (deviceUsageController DeviceUsageController) CreateDeviceUsageController(c
 	})
 }
 
+// FindAllDeviceUsageController is the controller for the find all device usage endpoint
+// @Summary Find all device usage
+// @Description Find all device usage
+// @Tags Device Usage
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Success 200 {object} response.DeviceUsageResponse
+// @Failure 400 {object} base.BaseResponse
+// @Router /device-usage [get]
 func (deviceUsageController DeviceUsageController) FindAllDeviceUsageController(c echo.Context) error {
 	userToken := c.Get("user").(*jwt.Token)
 	claims, ok := userToken.Claims.(jwt.MapClaims)

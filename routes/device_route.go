@@ -16,7 +16,7 @@ func (dr *DeviceRoutes) InitDeviceRoutes(e *echo.Echo) {
 	eJWT := e.Group("")
 	eJWT.Use(echojwt.JWT([]byte(os.Getenv("JWT_SECRET_KEY"))))
 
-	eDevice := eJWT.Group("/devices")
+	eDevice := eJWT.Group("/device")
 	eDevice.POST("", dr.DeviceController.CreateDeviceController)
 	eDevice.GET("/:id", dr.DeviceController.GetDeviceController)
 	eDevice.PUT("/:id", dr.DeviceController.UpdateDeviceController)

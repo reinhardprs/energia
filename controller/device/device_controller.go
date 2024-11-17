@@ -157,7 +157,7 @@ func (deviceController DeviceController) GetDeviceController(c echo.Context) err
 // @Security ApiKeyAuth
 // @Success 200 {object} response.DeviceResponse
 // @Failure 400 {object} base.BaseResponse
-// @Router /devices [get]
+// @Router /device [get]
 func (deviceController DeviceController) GetDevicesController(c echo.Context) error {
 	userToken := c.Get("user").(*jwt.Token)
 	claims := userToken.Claims.(jwt.MapClaims)

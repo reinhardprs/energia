@@ -29,7 +29,7 @@ func NewEmailController(emailService email.EmailServiceInterface) *EmailControll
 // @Security ApiKeyAuth
 // @Success 200 {object} response.EmailResponse
 // @Failure 400 {object} base.BaseResponse
-// @Router /report [post]
+// @Router /report [get]
 func (e *EmailController) SendDeviceUsageReportHandler(c echo.Context) error {
 	userToken := c.Get("user").(*jwt.Token)
 	claims := userToken.Claims.(jwt.MapClaims)

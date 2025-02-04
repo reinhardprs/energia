@@ -1,12 +1,26 @@
 # Energia API Mini Project
 
-Energia API adalah API sederhana yang dirancang untuk mengelola penggunaan perangkat listrik di rumah. Selain itu, API ini juga memberikan saran penggunaan perangkat berdasarkan informasi cuaca terkini.
+Energia API is a simple API designed to manage the usage of electrical devices in a household. Additionally, this API provides device usage recommendations based on current weather information.
+
+---
+
+## Available Features
+
+### Core Features
+- **Device Management**: Provides features to manage and estimate the cost of devices used.
+- **Weather Forecast**: Provides weather forecasts.
+- **Usage Recommendations**: Provides recommendations for device usage based on the weather.
+
+### Technical Features
+- **AI-Based Usage Recommendations**: Utilizes the OpenAI API to provide recommendations.
+- **Secure Authentication**: JWT integration for secure authentication.
+- **Email Notifications**: Notifications sent via SMTP.
 
 ---
 
 ## Entity Relationship Diagram (ERD)
 
-Berikut adalah ERD yang digunakan dalam project ini:
+Below is the ERD used in this project:
 
 ![ERD](images/Energia_ERD.png)
 
@@ -14,34 +28,34 @@ Berikut adalah ERD yang digunakan dalam project ini:
 
 ## High-Level Architecture (HLA)
 
-Berikut adalah High-Level Architecture (HLA) dari Energia API:
+Below is the High-Level Architecture (HLA) of the Energia API:
 
 ![HLA](images/Energia_HLA.png)
 
 ---
 
-## Host untuk Penggunaan API
+## Host for API Usage
 
-Energia API telah dihosting di cloud sehingga Anda dapat menggunakannya tanpa instalasi tambahan. Anda dapat mengakses API melalui host berikut:
+The Energia API has been hosted on the cloud, allowing you to use it without any additional installation. You can access the API via the following host:
 
 http://52.65.161.24
 
 ---
 
-## Dokumentasi API
+## API Documentation
 
-Untuk mengakses dokumentasi API, ikuti langkah-langkah berikut:
+To access the API documentation, follow these steps:
 
-### 1. Clone repositori ini
+### 1. Clone this repository
 
-Clone repositori ke dalam direktori lokal Anda menggunakan perintah berikut:
+Clone the repository into your local directory using the following command:
 
 ```bash  
 git clone <repository_url>
 ```
 
-### 2. Buat file .env
-Buat file .env di direktori root proyek dan isi dengan konfigurasi berikut:
+### 2. Create a .env file
+Create a .env file in the root directory of the project and fill it with the following configuration:
 
 ```plaintext
 DATABASE_HOST=""
@@ -58,18 +72,18 @@ MAIL_HOST=""
 MAIL_PORT=""
 ```
 
-### 3. Jalankan aplikasi
-Jalankan perintah berikut untuk memulai aplikasi:
+### 3. Run the application
+Run the following command to start the application:
 
 ```bash
 go run main.go
 ```
 
-### 4. Akses Dokumentasi API
-Buka browser Anda dan akses dokumentasi API melalui URL berikut:
+### 4. Access API Documentation
+Open your browser and access the API documentation via the following URL:
 
 ```plaintext
 http://{{host}}/swagger/index.html#
 ```
 
-Catatan: Gantilah {{host}} dengan alamat host yang sesuai, misalnya localhost:8080 jika aplikasi dijalankan secara lokal.
+Note: Replace {{host}} with the appropriate host address, for example, localhost:8080 if the application is running locally.
